@@ -1,0 +1,63 @@
+{
+  "foreign": [
+    {
+      "name": "downcall",
+      "parameter_types": [
+        "long",
+        "double",
+        "double"
+      ],
+      "return_type": "double"
+    },
+    {
+      "name": "downcall",
+      "parameter_types": [
+        "long",
+        "long",
+        "int"
+      ],
+      "return_type": "double"
+    },
+    {
+      "name": "downcall",
+      "parameter_types": [
+        "long",
+        "int",
+        "long",
+        "int",
+        "long"
+      ],
+      "return_type": "void"
+    },
+    {
+      "name": "downcall",
+      "parameter_types": [
+        "long",
+        "int",
+        "int",
+        "long"
+      ],
+      "return_type": "void"
+    },
+    {
+      "name": "downcall",
+      "parameter_types": [
+        "long",
+        "double",
+        "double",
+        "double",
+        "double"
+      ],
+      "return_type": "double"
+    },
+    {
+      "name": "downcall",
+      "parameter_types": [
+        "long",
+        "long",
+        "int"
+      ],
+      "return_type": "double"
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+{
+  "reflection": [
+    {
+      "type": "sun.text.resources.cldr.FormatData"
+    },
+    {
+      "type": "sun.text.resources.cldr.FormatData_en"
+    },
+    {
+      "type": "sun.text.resources.cldr.FormatData_en_US"
+    }
+  ],
+  "foreign": {
+    "downcalls": [
+      {
+        "returnType": "jdouble",
+        "parameterTypes": [
+          "void*",
+          "void*",
+          "jint"
+        ]
+      },
+      {
+        "returnType": "void",
+        "parameterTypes": [
+          "void*",
+          "jint",
+          "void*",
+          "jint",
+          "void*"
+        ]
+      },
+      {
+        "returnType": "jdouble",
+        "parameterTypes": [
+          "jdouble",
+          "jdouble"
+        ]
+      },
+      {
+        "returnType": "void",
+        "parameterTypes": [
+          "void*",
+          "jint",
+          "jint",
+          "void*"
+        ]
+      },
+      {
+        "returnType": "jdouble",
+        "parameterTypes": [
+          "jdouble",
+          "jdouble",
+          "jdouble",
+          "jdouble"
+        ]
+      },
+      {
+        "returnType": "jdouble",
+        "parameterTypes": [
+          "void*",
+          "jint"
+        ]
+      }
+    ]
+  }
+}

@@ -235,4 +235,3 @@ public class SigFFM {
     }
 }
 
-java -Djava.library.path=/home/aya/Downloads/TP7-FWK/src/c/ SigFFM
