@@ -1,11 +1,11 @@
 #include <math.h>
 #include <stdlib.h>
-#include <jni.h>
-
 
 double hyp(double a, double b) {
     return sqrt(a*a + b*b);
 }
+
+
 double avg(double *data, int n) {
     double s = 0;
     for(int i = 0; i < n; i++) {
@@ -13,6 +13,8 @@ double avg(double *data, int n) {
     }
     return s / n;
 }
+
+
 double var(double *data, int n) {
     double m = avg(data, n);
     double s = 0;
@@ -22,6 +24,36 @@ double var(double *data, int n) {
     }
     return s / n;
 }
+
+double median(double *data, int n) {
+    // Copie pour ne pas modifier l'original
+    double *copy = malloc(sizeof(double) * n);
+    for(int i = 0; i < n; i++) {
+        copy[i] = data[i];
+    }
+
+    for(int i = 0; i < n-1; i++) {
+        for(int j = 0; j < n-i-1; j++) {
+            if(copy[j] > copy[j+1]) {
+                double temp = copy[j];
+                copy[j] = copy[j+1];
+                copy[j+1] = temp;
+            }
+        }
+    }
+
+    double result;
+    if(n % 2 == 0) {
+        result = (copy[n/2 - 1] + copy[n/2]) / 2.0;
+    } else {
+        result = copy[n/2];
+    }
+
+    free(copy);
+    return result;
+}
+
+
 void convolve(const double *signal, int n,
               const double *kernel, int k,
               double *out) {
@@ -37,25 +69,41 @@ void convolve(const double *signal, int n,
     }
 }
 
-JNIEXPORT jdouble JNICALL Java_SigJNI_avg(JNIEnv *env, jclass cls, jdoubleArray arr) {
-int n = (*env)->GetArrayLength(env, arr);
-jdouble *ptr = (*env)->GetDoubleArrayElements(env, arr, 0);
-double result = avg(ptr, n);
-(*env)->ReleaseDoubleArrayElements(env, arr, ptr, 0);
-return result;
+void moving_average(const double *signal, int n,
+                    int window_size,
+                    double *out) {
+    for (int i = 0; i < n; i++) {
+        double sum = 0;
+        int count = 0;
+
+        for (int j = 0; j < window_size; j++) {
+            int idx = i - j;
+            if (idx >= 0) {
+                sum += signal[idx];
+                count++;
+            }
+        }
+
+        out[i] = sum / count;
+    }
 }
 
-JNIEXPORT jdoubleArray JNICALL Java_SigJNI_convolve(JNIEnv *env, jclass cls, jdoubleArray s, jdoubleArray k) {
-int ns = (*env)->GetArrayLength(env, s);
-int nk = (*env)->GetArrayLength(env, k);
-jdouble *ps = (*env)->GetDoubleArrayElements(env, s, 0);
-jdouble *pk = (*env)->GetDoubleArrayElements(env, k, 0);
-jdoubleArray out = (*env)->NewDoubleArray(env, ns);
-jdouble *po = malloc(sizeof(double)*ns);
-convolve(ps, ns, pk, nk, po);
-(*env)->SetDoubleArrayRegion(env, out, 0, ns, po);
-free(po);
-(*env)->ReleaseDoubleArrayElements(env, s, ps, 0);
-(*env)->ReleaseDoubleArrayElements(env, k, pk, 0);
-return out;
+double distance(double x1, double y1, double x2, double y2) {
+    double dx = x2 - x1;
+    double dy = y2 - y1;
+    return sqrt(dx*dx + dy*dy);
+}
+
+
+double angle(double x1, double y1, double x2, double y2) {
+    return atan2(y2, x2) - atan2(y1, x1);
+}
+
+
+double dot_product(double *v1, double *v2, int n) {
+    double result = 0;
+    for(int i = 0; i < n; i++) {
+        result += v1[i] * v2[i];
+    }
+    return result;
 }
